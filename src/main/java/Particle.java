@@ -31,12 +31,24 @@ public class Particle {
         return getDistance(p) - rad - p.rad;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
     public double getProp() {
         return prop;
     }
 
     @Override
     public String toString() {
+        return "%d: %.2f:%.2f".formatted(id, x, y);
+    }
+
+    public String printNeighborhoods() {
         StringBuilder sb = new StringBuilder()
                 .append(id)
                 .append("\t\t");
