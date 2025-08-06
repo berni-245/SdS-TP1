@@ -3,7 +3,7 @@ public class Tester {
         Particle p1 =  new Particle(0, 1.1, 5, 5);
         Particle p2 = new Particle(0, 5, 5, 5);
         Particle p3 = new Particle(5, 0, 5, 5);
-        Particle p4 = new Particle(4.5, 4.5, 5, 5);
+        Particle p4 = new Particle(1.5, 5, 5, 5);
         Particle p5 = new Particle(0, 1.5, 5, 5);
         Particle p6 = new Particle(0, 1.6, 5, 5);
         Particle p7 = new Particle(0, 1.7, 5, 5);
@@ -18,7 +18,7 @@ public class Tester {
         System.out.println("Particles location per Cell");
         System.out.println(grid);
         System.out.println("Cell Index Method");
-        grid.performCellIndexMethod(1.4);
+        grid.performCellIndexMethod(1.4, true);
         grid.getParticles().forEach(
                 p -> System.out.println(p.stringNeighborhoods())
         );

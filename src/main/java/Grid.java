@@ -8,6 +8,7 @@ public class Grid {
     private final double cellLength;
     private final List<List<Particle>> grid;
     private final List<Particle> particles;
+
     public Grid(double L, int M) {
         this.L = L;
         this.M = M;
@@ -61,13 +62,13 @@ public class Grid {
         return particles;
     }
 
-    public void performCellIndexMethod(double neighborRadius) {
+    public void performCellIndexMethod(double neighborRadius, boolean boundPeriodicity) {
         if (L/M <= neighborRadius || neighborRadius <= 0)
             throw new IllegalArgumentException("NeighborRadius needs to be a positive number smaller than L/M");
 
         for (int i = 0; i < M*M; i++) {
             for (Particle particle : grid.get(i)) {
-                List<Particle> neighbors = getAboveAndRightAdjacentParticles(i);
+                List<Particle> neighbors = getAboveAndRightAdjacentParticles(i, boundPeriodicity);
                 for (Particle neighbor : neighbors) {
                     if (neighbor.getEdgeDistance(particle) <= neighborRadius) {
                         particle.addNeighbor(neighbor);
@@ -83,25 +84,30 @@ public class Grid {
         }
     }
 
-    private List<Particle> getAboveAndRightAdjacentParticles(int i) {
+    private List<Particle> getAboveAndRightAdjacentParticles(int cellIndex, boolean boundPeriodicity) {
         List<Particle> adjacentParticles = new ArrayList<>();
 
-        int row = i / M;
-        int col = i % M;
+        int row = cellIndex / M;
+        int col = cellIndex % M;
 
         int[][] directions = {
-                {-1, 0}, {-1, 1}, // above, upper right
-                         {0, 1},  // right
-                         {1, 1}   // lower right
+                {1, 0}, {1, 1}, // above, upper right
+                        {0, 1}, // right
+                        {-1, 1} // lower right
         };
 
         for (int[] dir : directions) {
             int newRow = row + dir[0];
             int newCol = col + dir[1];
 
+            if (boundPeriodicity) {
+                newRow = (newRow + M) % M;
+                newCol = (newCol + M) % M;
+            }
+
             if (newRow >= 0 && newRow < M && newCol >= 0 && newCol < M) {
-                int neighborIndex = newRow * M + newCol;
-                adjacentParticles.addAll(grid.get(neighborIndex));
+                int neighborCellIndex = newRow * M + newCol;
+                adjacentParticles.addAll(grid.get(neighborCellIndex));
             }
         }
 

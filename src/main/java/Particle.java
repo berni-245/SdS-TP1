@@ -22,7 +22,7 @@ public class Particle {
         this.neighbors.add(neighbor);
     }
 
-    public double getDistance(Particle p) {
+    private double getDistance(Particle p) {
         return Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2));
     }
 
