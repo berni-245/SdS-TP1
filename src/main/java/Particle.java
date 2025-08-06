@@ -18,9 +18,8 @@ public class Particle {
         this.neighbors = new ArrayList<>();
     }
 
-    public Particle addNeighbor(Particle neighbor) {
+    public void addNeighbor(Particle neighbor) {
         this.neighbors.add(neighbor);
-        return this;
     }
 
     public double getDistance(Particle p) {
@@ -48,7 +47,7 @@ public class Particle {
         return "%d: %.2f:%.2f".formatted(id, x, y);
     }
 
-    public String printNeighborhoods() {
+    public String stringNeighborhoods() {
         StringBuilder sb = new StringBuilder()
                 .append(id)
                 .append("\t\t");

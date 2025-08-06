@@ -6,14 +6,16 @@ public class Grid {
     private final double L;
     private final int M;
     private final double cellLength;
-    private final List<List<Particle>> particles;
+    private final List<List<Particle>> grid;
+    private final List<Particle> particles;
     public Grid(double L, int M) {
         this.L = L;
         this.M = M;
         this.cellLength = L / M;
         this.particles = new ArrayList<>();
+        this.grid = new ArrayList<>();
         for (int i = 0; i < M*M; i++) {
-            particles.add(new ArrayList<>());
+            grid.add(new ArrayList<>());
         }
     }
 
@@ -28,7 +30,8 @@ public class Grid {
         if (parX >= L || parX < 0 || parY >= L || parY < 0)
             throw new IndexOutOfBoundsException("The particle doesn't fit on the grid");
         int i = (int) (parX / cellLength) + M * (int) (parY / cellLength);
-        particles.get(i).add(particle);
+        grid.get(i).add(particle);
+        particles.add(particle);
         return this;
     }
 
@@ -47,10 +50,68 @@ public class Grid {
         for (int row = M - 1; row >= 0; row--) {
             for (int col = 0; col < M; col++) {
                 int index = row * M + col;
-                sb.append(cellToString.apply(particles.get(index)));
+                sb.append(cellToString.apply(grid.get(index)));
             }
             sb.append("\n");
         }
         return sb.toString();
     }
+
+    public List<Particle> getParticles() {
+        return particles;
+    }
+
+    public void performCellIndexMethod(double neighborRadius) {
+        if (L/M <= neighborRadius || neighborRadius <= 0)
+            throw new IllegalArgumentException("NeighborRadius needs to be a positive number smaller than L/M");
+
+        for (int i = 0; i < M*M; i++) {
+            for (Particle particle : grid.get(i)) {
+                List<Particle> neighbors = getAboveAndRightAdjacentParticles(i);
+                for (Particle neighbor : neighbors) {
+                    if (neighbor.getEdgeDistance(particle) <= neighborRadius) {
+                        particle.addNeighbor(neighbor);
+                        neighbor.addNeighbor(particle);
+                    }
+                }
+                for (Particle neighbor : getCurrentCellParticles(i, particle)) {
+                    if (neighbor.getEdgeDistance(particle) <= neighborRadius)
+                        particle.addNeighbor(neighbor);
+                }
+
+            }
+        }
+    }
+
+    private List<Particle> getAboveAndRightAdjacentParticles(int i) {
+        List<Particle> adjacentParticles = new ArrayList<>();
+
+        int row = i / M;
+        int col = i % M;
+
+        int[][] directions = {
+                {-1, 0}, {-1, 1}, // above, upper right
+                         {0, 1},  // right
+                         {1, 1}   // lower right
+        };
+
+        for (int[] dir : directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if (newRow >= 0 && newRow < M && newCol >= 0 && newCol < M) {
+                int neighborIndex = newRow * M + newCol;
+                adjacentParticles.addAll(grid.get(neighborIndex));
+            }
+        }
+
+        return adjacentParticles;
+    }
+
+    private List<Particle> getCurrentCellParticles(int i, Particle p) {
+        List<Particle> toReturn = new ArrayList<>(grid.get(i));
+        toReturn.remove(p);
+        return toReturn;
+    }
+
 }
