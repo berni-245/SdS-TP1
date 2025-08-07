@@ -26,5 +26,6 @@ public class Tester {
         grid.getParticles().forEach(
                 p -> System.out.println(p.stringNeighborhoods())
         );
+        GraphRenderer.show(grid,3);
     }
 }

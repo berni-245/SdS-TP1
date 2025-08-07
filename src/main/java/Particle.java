@@ -57,4 +57,16 @@ public class Particle {
         sb.replace(sb.length() - 2, sb.length(), "\n");
         return sb.toString();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getRad() {
+        return rad;
+    }
+
+    public List<Particle> getNeighbors() {
+        return neighbors;
+    }
 }

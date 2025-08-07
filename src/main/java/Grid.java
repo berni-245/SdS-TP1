@@ -120,4 +120,11 @@ public class Grid {
         return toReturn;
     }
 
+    public int getM() {
+        return M;
+    }
+
+    public double getL() {
+        return L;
+    }
 }
