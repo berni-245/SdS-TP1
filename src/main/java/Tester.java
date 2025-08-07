@@ -1,5 +1,6 @@
 public class Tester {
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         Particle p1 =  new Particle(0, 1.1, 5, 5);
         Particle p2 = new Particle(0, 5, 5, 5);
         Particle p3 = new Particle(5, 0, 5, 5);
@@ -19,6 +20,9 @@ public class Tester {
         System.out.println(grid);
         System.out.println("Cell Index Method");
         grid.performCellIndexMethod(1.4, true);
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        PostProcessor.process(grid.getParticles(),elapsedTime);
         grid.getParticles().forEach(
                 p -> System.out.println(p.stringNeighborhoods())
         );
