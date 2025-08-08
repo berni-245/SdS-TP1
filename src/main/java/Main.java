@@ -37,7 +37,11 @@ public class Main {
             parseInput(grid, n);
         }
 
+        long startTime = System.currentTimeMillis();
         grid.performCellIndexMethod(neighborRadius, boundPeriodicity);
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        PostProcessor.process(grid.getParticles(),elapsedTime);
         // TODO: post processor
 
         GraphRenderer.show(grid,id);
