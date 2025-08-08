@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -63,8 +64,11 @@ public class Grid {
     }
 
     public void performCellIndexMethod(double neighborRadius, boolean boundPeriodicity) {
-        if (L/M <= neighborRadius || neighborRadius <= 0)
-            throw new IllegalArgumentException("NeighborRadius needs to be a positive number smaller than L/M");
+        double maxRadius = getParticles().stream()
+                .max(Comparator.comparingDouble(Particle::getRad)).orElseThrow().getRad();
+        System.out.println(maxRadius);
+        if (L/M - 2 * maxRadius <= neighborRadius || neighborRadius <= 0)
+            throw new IllegalArgumentException("NeighborRadius needs to be a positive number smaller than L/M - 2*max_radius");
 
         for (int i = 0; i < M*M; i++) {
             for (Particle particle : grid.get(i)) {
