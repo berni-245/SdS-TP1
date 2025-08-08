@@ -1,10 +1,10 @@
 public class Tester {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Particle p1 =  new Particle(0.8, 1.1, 0.5, 5);
+        Particle p1 =  new Particle(0.8, 1.1, 0.1, 5);
         Particle p2 = new Particle(0, 5, 0.6, 5);
-        Particle p3 = new Particle(5, 0, 0.4, 5);
-        Particle p4 = new Particle(1.5, 5, 0.5, 5);
+        Particle p3 = new Particle(5, 1.1, 0.4, 5);
+        Particle p4 = new Particle(1.5, 3.1, 0.1, 5);
         Particle p5 = new Particle(1.2, 2, 0.5, 5);
         double L = 6;
         int M = 2;

@@ -22,12 +22,19 @@ public class Particle {
         this.neighbors.add(neighbor);
     }
 
-    private double getDistance(Particle p) {
-        return Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2));
+    private double getDistance(Particle p, double L) {
+        return Math.sqrt(
+                    Math.pow(
+                            Math.min(Math.abs(p.x - x), L - Math.abs(p.x - x)), 2
+                    ) +
+                    Math.pow(
+                            Math.min(Math.abs(p.y - y), L - Math.abs(p.y - y)), 2
+                    )
+        );
     }
 
-    public double getEdgeDistance(Particle p) {
-        return getDistance(p) - rad - p.rad;
+    public double getEdgeDistance(Particle p, double L) {
+        return getDistance(p, L) - rad - p.rad;
     }
 
     public double getX() {
