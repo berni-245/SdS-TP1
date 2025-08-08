@@ -13,9 +13,10 @@ public class Main {
     private final static String L = "L";
     private final static String M = "M";
     private final static String ID = "ID";
-    private final static String PARTICLE_RADIUS = "particle-radius";
-    private final static String NEIGHBOR_RADIUS = "neighbor-radius";
+    private final static String PARTICLE_RADIUS = "r";
+    private final static String NEIGHBOR_RADIUS = "rc";
     private final static String BOUND_PERIODICITY = "bound-periodicity";
+    private final static String FIXED_RADIUS = "fixed";
 
     public static void main(String[] args) {
         boolean generateParticles = Boolean.parseBoolean(System.getProperty(GENERATE_PARTICLES));
@@ -29,8 +30,9 @@ public class Main {
         Grid grid = new Grid(l, m);
 
         if (generateParticles) {
-            //double particleRadius = Double.parseDouble(System.getProperty(PARTICLE_RADIUS));
-            ParticleGenerator.generate(n, l, grid::addParticle, generateInputFiles);
+            double particleRadius = Double.parseDouble(System.getProperty(PARTICLE_RADIUS));
+            boolean fixedRadius = Boolean.parseBoolean(System.getProperty(FIXED_RADIUS));
+            ParticleGenerator.generate(n, l, grid::addParticle, generateInputFiles,particleRadius,fixedRadius);
         } else {
             parseInput(grid, n);
         }
