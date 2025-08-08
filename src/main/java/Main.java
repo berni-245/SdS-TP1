@@ -17,10 +17,12 @@ public class Main {
     private final static String NEIGHBOR_RADIUS = "rc";
     private final static String BOUND_PERIODICITY = "bound-periodicity";
     private final static String FIXED_RADIUS = "fixed";
+    private final static String SHOW_GRAPH = "graph";
 
     public static void main(String[] args) {
         boolean generateParticles = Boolean.parseBoolean(System.getProperty(GENERATE_PARTICLES));
         boolean generateInputFiles = Boolean.parseBoolean(System.getProperty(GENERATE_INPUT_FILES));
+        boolean showGraph = Boolean.parseBoolean(System.getProperty(SHOW_GRAPH));
         int n = Integer.parseInt(System.getProperty(N));
         int id = Integer.parseInt(System.getProperty(ID));
         int m = Integer.parseInt(System.getProperty(M));
@@ -32,7 +34,7 @@ public class Main {
         if (generateParticles) {
             double particleRadius = Double.parseDouble(System.getProperty(PARTICLE_RADIUS));
             boolean fixedRadius = Boolean.parseBoolean(System.getProperty(FIXED_RADIUS));
-            ParticleGenerator.generate(n, l, grid::addParticle, generateInputFiles,particleRadius,fixedRadius);
+            ParticleGenerator.generate(n, l, grid::addParticle, generateInputFiles, particleRadius, fixedRadius);
         } else {
             parseInput(grid, n);
         }
@@ -41,14 +43,16 @@ public class Main {
         grid.performCellIndexMethod(neighborRadius, boundPeriodicity);
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        PostProcessor.process(grid.getParticles(),elapsedTime);
+        PostProcessor.process(grid.getParticles(), elapsedTime);
         // TODO: post processor
 
-        GraphRenderer.show(grid,id);
+        if (showGraph) {
+            GraphRenderer.show(grid, id);
+        }
 
 
         //testeo todo: sacar
-       // grid.getParticles().forEach(
+        // grid.getParticles().forEach(
         //        p -> System.out.println(p.stringNeighborhoods())
         //);
     }
