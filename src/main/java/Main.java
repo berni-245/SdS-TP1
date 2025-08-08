@@ -44,17 +44,9 @@ public class Main {
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
         PostProcessor.process(grid.getParticles(), elapsedTime);
-        // TODO: post processor
-
         if (showGraph) {
             GraphRenderer.show(grid, id);
         }
-
-
-        //testeo todo: sacar
-        // grid.getParticles().forEach(
-        //        p -> System.out.println(p.stringNeighborhoods())
-        //);
     }
 
     private static void parseInput(Grid grid, int n) {
