@@ -12,7 +12,7 @@ public class PostProcessor {
             }
             writer.newLine();
             writer.write("Time elapsed: " + runtime + "ms");
-        } catch (IOException _) {
+        } catch (IOException ignored) {
         }
     }
 }
