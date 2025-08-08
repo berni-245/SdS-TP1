@@ -15,7 +15,7 @@ public class PostProcessor {
         } catch (IOException ignored) {
         }
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("rawtime.txt", true))) {
-            writer.write(runtime+"ms");
+            writer.write(String.valueOf(runtime));
             writer.newLine();
         } catch (IOException ignored) {
         }
