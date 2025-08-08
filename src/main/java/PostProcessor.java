@@ -14,5 +14,10 @@ public class PostProcessor {
             writer.write("Time elapsed: " + runtime + "ms");
         } catch (IOException ignored) {
         }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("rawtime.txt", true))) {
+            writer.write(runtime+"ms");
+            writer.newLine();
+        } catch (IOException ignored) {
+        }
     }
 }
