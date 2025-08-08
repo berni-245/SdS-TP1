@@ -12,6 +12,7 @@ public class Main {
     private final static String N = "N";
     private final static String L = "L";
     private final static String M = "M";
+    private final static String ID = "ID";
     private final static String PARTICLE_RADIUS = "particle-radius";
     private final static String NEIGHBOR_RADIUS = "neighbor-radius";
     private final static String BOUND_PERIODICITY = "bound-periodicity";
@@ -20,6 +21,7 @@ public class Main {
         boolean generateParticles = Boolean.parseBoolean(System.getProperty(GENERATE_PARTICLES));
         boolean generateInputFiles = Boolean.parseBoolean(System.getProperty(GENERATE_INPUT_FILES));
         int n = Integer.parseInt(System.getProperty(N));
+        int id = Integer.parseInt(System.getProperty(ID));
         int m = Integer.parseInt(System.getProperty(M));
         double l = Double.parseDouble(System.getProperty(L));
         boolean boundPeriodicity = Boolean.parseBoolean(System.getProperty(BOUND_PERIODICITY));
@@ -36,7 +38,7 @@ public class Main {
         grid.performCellIndexMethod(neighborRadius, boundPeriodicity);
         // TODO: post processor
 
-        GraphRenderer.show(grid,1);
+        GraphRenderer.show(grid,id);
 
 
         //testeo todo: sacar
