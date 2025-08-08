@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 public class ParticleGenerator {
 
-    public static void generate(int particleNumber, double gridSize, Consumer<Particle> consumer) {
+    public static void generate(int particleNumber, double gridSize, Consumer<Particle> consumer, boolean generateInputFiles) {
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
         double x;
@@ -13,7 +13,7 @@ public class ParticleGenerator {
         for (int i = 0; i < particleNumber; i++) {
             x = random.nextDouble() * gridSize;
             y = random.nextDouble() * gridSize;
-            consumer.accept(new Particle(x, y, 0, 1));
+            consumer.accept(new Particle(x, y, 1, 1));
         }
     }
 
