@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GraphRenderer extends JPanel {
     private final Grid grid;
@@ -27,7 +31,7 @@ public class GraphRenderer extends JPanel {
             int alpha = 180; // nearly opaque
             Color fill;
             if (p.getId() == selected) {
-                fill = new Color(255, 255,   0, alpha);  // yellow
+                fill = new Color(28, 104, 255, alpha);  // yellow
             } else if (grid.getParticles()
                     .stream()
                     .filter(pp -> pp.getId() == selected)
@@ -67,7 +71,7 @@ public class GraphRenderer extends JPanel {
             ty = Math.min(ty, PANEL_SIZE);
 
             g2.setColor(Color.BLACK);
-            g2.drawString(idStr, tx, ty);
+          //  g2.drawString(idStr, tx, ty);
         }
 
         // 2) Draw the grid on top, with black lines and larger labels
@@ -79,7 +83,7 @@ public class GraphRenderer extends JPanel {
                 int y = (M - 1 - row) * cellSize;
                 int idx = row * M + col;
                 g2.drawRect(x, y, cellSize, cellSize);
-                g2.drawString(String.valueOf(idx), x + 6, y + 16);
+               // g2.drawString(String.valueOf(idx), x + 6, y + 16);
             }
         }
 
@@ -95,4 +99,22 @@ public class GraphRenderer extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+    public static void saveGridImage(Grid grid, int selected) throws IOException {
+        GraphRenderer renderer = new GraphRenderer(grid, selected);
+        renderer.setSize(PANEL_SIZE, PANEL_SIZE);
+
+        BufferedImage image = new BufferedImage(
+                PANEL_SIZE, PANEL_SIZE,
+                BufferedImage.TYPE_INT_ARGB
+        );
+
+        Graphics2D g2d = image.createGraphics();
+        renderer.paint(g2d); // llama al paintComponent internamente
+        g2d.dispose();
+        ImageIO.write(image, "png", new File("graph.png"));
+    }
+
+
+
 }

@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,7 @@ public class Main {
     private final static String BOUND_PERIODICITY = "bound-periodicity";
     private final static String FIXED_RADIUS = "fixed";
     private final static String SHOW_GRAPH = "graph";
+    private final static String SAVE_GRAPH = "save";
 
     public static void main(String[] args) {
         boolean generateParticles = Boolean.parseBoolean(System.getProperty(GENERATE_PARTICLES));
@@ -28,6 +30,7 @@ public class Main {
         int m = Integer.parseInt(System.getProperty(M));
         double l = Double.parseDouble(System.getProperty(L));
         boolean boundPeriodicity = Boolean.parseBoolean(System.getProperty(BOUND_PERIODICITY));
+        boolean saveGraph = Boolean.parseBoolean(System.getProperty(SAVE_GRAPH));
         double neighborRadius = Double.parseDouble(System.getProperty(NEIGHBOR_RADIUS));
         Grid grid = new Grid(l, m);
 
@@ -44,6 +47,13 @@ public class Main {
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
         PostProcessor.process(grid.getParticles(), elapsedTime);
+        if (saveGraph){
+            try {
+                GraphRenderer.saveGridImage(grid, id);
+            } catch (IOException e) {
+                throw new RuntimeException("Error al intentar manejar el archivo xx");
+            }
+        }
         if (showGraph) {
             GraphRenderer.show(grid, id);
         }
