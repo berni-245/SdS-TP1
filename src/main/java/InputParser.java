@@ -1,15 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
  * Parser implementation for a particle neighbor simulator.
- *
  * This class receives two {@code BufferedReader} instances that read from the static and dynamic
  * input files used in the simulation. It also receives a {@code Consumer<Particle>} to define
  * how each parsed particle should be handled, along with the total number of particles to parse.
@@ -31,7 +25,7 @@ public class InputParser {
                     Double.parseDouble(staticLine[2])));
             i++;
         }
-        if ((pos = dynamicBufferedReader.readLine()) != null || (props = staticBufferedReader.readLine()) != null || i < n) {
+        if (dynamicBufferedReader.readLine() != null || staticBufferedReader.readLine() != null || i < n) {
             throw new RuntimeException("Error parsing files. Wrong number of particles" + i);
         }
     }
