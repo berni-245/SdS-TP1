@@ -25,8 +25,8 @@ public class InputParser {
             String[] dynamicLine = pos.split("\\s+");
             String[] staticLine = props.split("\\s+");
             consumer.accept(new Particle(
-                    Double.parseDouble(dynamicLine[0]),
                     Double.parseDouble(dynamicLine[1]),
+                    Double.parseDouble(dynamicLine[2]),
                     Double.parseDouble(staticLine[1]),
                     Double.parseDouble(staticLine[2])));
             i++;

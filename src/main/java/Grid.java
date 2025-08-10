@@ -74,13 +74,13 @@ public class Grid {
             for (Particle particle : grid.get(i)) {
                 List<Particle> neighbors = getAboveAndRightAdjacentParticles(i, boundPeriodicity);
                 for (Particle neighbor : neighbors) {
-                    if (neighbor.getEdgeDistance(particle, L) <= neighborRadius) {
+                    if (neighbor.getEdgeDistance(particle, boundPeriodicity, L) <= neighborRadius) {
                         particle.addNeighbor(neighbor);
                         neighbor.addNeighbor(particle);
                     }
                 }
                 for (Particle neighbor : getCurrentCellParticles(i, particle)) {
-                    if (neighbor.getEdgeDistance(particle, L) <= neighborRadius)
+                    if (neighbor.getEdgeDistance(particle, boundPeriodicity, L) <= neighborRadius)
                         particle.addNeighbor(neighbor);
                 }
 
