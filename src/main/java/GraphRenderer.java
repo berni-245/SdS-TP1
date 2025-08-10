@@ -9,10 +9,12 @@ public class GraphRenderer extends JPanel {
     private final Grid grid;
     private final int selected;
     private static final int PANEL_SIZE = 700;
+    private final boolean showIDS;
 
-    public GraphRenderer(Grid grid, int selected) {
+    public GraphRenderer(Grid grid, int selected, boolean showIDS) {
         this.grid = grid;
         this.selected = selected;
+        this.showIDS = showIDS;
         setPreferredSize(new Dimension(PANEL_SIZE, PANEL_SIZE));
     }
 
@@ -71,7 +73,8 @@ public class GraphRenderer extends JPanel {
             ty = Math.min(ty, PANEL_SIZE);
 
             g2.setColor(Color.BLACK);
-          //  g2.drawString(idStr, tx, ty);
+            if (showIDS)
+                g2.drawString(idStr, tx, ty);
         }
 
         // 2) Draw the grid on top, with black lines and larger labels
@@ -83,7 +86,8 @@ public class GraphRenderer extends JPanel {
                 int y = (M - 1 - row) * cellSize;
                 int idx = row * M + col;
                 g2.drawRect(x, y, cellSize, cellSize);
-               // g2.drawString(String.valueOf(idx), x + 6, y + 16);
+                if (showIDS)
+                    g2.drawString(String.valueOf(idx), x + 6, y + 16);
             }
         }
 
@@ -91,17 +95,17 @@ public class GraphRenderer extends JPanel {
     }
 
     //Makes a graphic of the grid, highlighting a certain particle and its neighbors
-    public static void show(Grid grid, int selected) {
+    public static void show(Grid grid, int selected, boolean showIDS) {
         JFrame frame = new JFrame("Grid Visualizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new GraphRenderer(grid, selected));
+        frame.add(new GraphRenderer(grid, selected, showIDS));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    public static void saveGridImage(Grid grid, int selected) throws IOException {
-        GraphRenderer renderer = new GraphRenderer(grid, selected);
+    public static void saveGridImage(Grid grid, int selected, boolean showIDS) throws IOException {
+        GraphRenderer renderer = new GraphRenderer(grid, selected, showIDS);
         renderer.setSize(PANEL_SIZE, PANEL_SIZE);
 
         BufferedImage image = new BufferedImage(

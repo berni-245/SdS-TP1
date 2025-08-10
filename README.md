@@ -43,3 +43,4 @@ Donde los argumentos posibles son los siguientes:
     "fixed"; Usar el mismo r para todas las particulas aleatoriamente generadas
     "graph"; Mostrar el grafico
     "save"; guardar el grafico
+    "show-ids"; mostrar ids en gráfico

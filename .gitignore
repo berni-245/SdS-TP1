@@ -41,3 +41,4 @@ build/
 *.txt
 Pipfile.lock
 .ipynb_checkpoints
+*.png

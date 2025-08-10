@@ -20,11 +20,13 @@ public class Main {
     private final static String FIXED_RADIUS = "fixed";
     private final static String SHOW_GRAPH = "graph";
     private final static String SAVE_GRAPH = "save";
+    private final static String SHOW_IDS = "show-ids";
 
     public static void main(String[] args) {
         boolean generateParticles = Boolean.parseBoolean(System.getProperty(GENERATE_PARTICLES));
         boolean generateInputFiles = Boolean.parseBoolean(System.getProperty(GENERATE_INPUT_FILES));
         boolean showGraph = Boolean.parseBoolean(System.getProperty(SHOW_GRAPH));
+        boolean showIDS = Boolean.parseBoolean(System.getProperty(SHOW_IDS));
         int n = Integer.parseInt(System.getProperty(N));
         int id = Integer.parseInt(System.getProperty(ID));
         int m = Integer.parseInt(System.getProperty(M));
@@ -49,13 +51,13 @@ public class Main {
         PostProcessor.process(grid.getParticles(), elapsedTime);
         if (saveGraph){
             try {
-                GraphRenderer.saveGridImage(grid, id);
+                GraphRenderer.saveGridImage(grid, id, showIDS);
             } catch (IOException e) {
                 throw new RuntimeException("Error al intentar manejar el archivo xx");
             }
         }
         if (showGraph) {
-            GraphRenderer.show(grid, id);
+            GraphRenderer.show(grid, id, showIDS);
         }
     }
 
