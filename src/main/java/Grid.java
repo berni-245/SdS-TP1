@@ -72,7 +72,7 @@ public class Grid {
 
         for (int i = 0; i < M*M; i++) {
             for (Particle particle : grid.get(i)) {
-                List<Particle> neighbors = getAboveAndRightAdjacentParticles(i, boundPeriodicity);
+                List<Particle> neighbors = getAboveAndRightAdjacentParticles(i, boundPeriodicity, particle);
                 for (Particle neighbor : neighbors) {
                     if (neighbor.getEdgeDistance(particle, boundPeriodicity, L) <= neighborRadius) {
                         particle.addNeighbor(neighbor);
@@ -88,7 +88,7 @@ public class Grid {
         }
     }
 
-    private List<Particle> getAboveAndRightAdjacentParticles(int cellIndex, boolean boundPeriodicity) {
+    private List<Particle> getAboveAndRightAdjacentParticles(int cellIndex, boolean boundPeriodicity, Particle particle) {
         List<Particle> adjacentParticles = new ArrayList<>();
 
         int row = cellIndex / M;
@@ -112,6 +112,8 @@ public class Grid {
             if (newRow >= 0 && newRow < M && newCol >= 0 && newCol < M) {
                 int neighborCellIndex = newRow * M + newCol;
                 adjacentParticles.addAll(grid.get(neighborCellIndex));
+                if (boundPeriodicity)
+                    adjacentParticles.remove(particle);
             }
         }
 
